@@ -16,3 +16,7 @@ For example, in following image function `Show-Graph` takes data points as input
 You can also customize the labels on X and Y-Axis
 
 ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example2.png)
+
+The function consumes data points, generated during script execution or Pre stored data like in a file or database.
+
+![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example3.png)
