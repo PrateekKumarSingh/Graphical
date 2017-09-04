@@ -1,2 +1,4 @@
 # PSConsoleGraph
-Inputs data points and draws graph on a console
+Inputs datapoints and draws graph on the Powershell console
+
+![](.\Images\Capture.PNG)
