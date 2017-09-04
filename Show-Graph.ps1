@@ -1,3 +1,35 @@
+<#
+.SYNOPSIS
+Draws graph in the Powershell console
+
+.DESCRIPTION
+Inputs datapoints and draws colored coded graph in the Powershell console, which could be customized.
+
+.PARAMETER Datapoints
+Array of data points which is to be plotted on the graph
+
+.PARAMETER XAxisTitle
+Label on the X-Axis
+
+.PARAMETER YAxisTitle
+Label on the Y-Axis
+
+.EXAMPLE
+Show-Graph -Datapoints $Datapoints
+
+.EXAMPLE
+Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitle "Percentage"
+
+.NOTES
+Blog: https://geekeefy.wordpress.com/
+Author: https://twitter.com/SinghPrateik
+Features and Benefits:
+* Color-coded output depending upon the Value of Datapoint
+* Custom X an Y-Axis labels
+* Graph in console is independent and fully customizable, not like Task Manager (Performance Tab)
+* Could be incorporated in Powershell scripts
+* Can consume datapoints generated during script run or Pre stored data like in a file or database.
+#>
 Function Show-Graph {
     [cmdletbinding()]
     [alias("Graph")]
@@ -70,12 +102,5 @@ Function Show-Graph {
     Write-Host $XAxisLabel -ForegroundColor DarkYellow # Prints XAxisTitle
 }
 
-$Datapoints = (1..100|Get-Random -Count 50)
-
-#$Datapoints = 1..50 | Foreach {
-#    Get-WmiObject Win32_Memory | `
-#    Measure-Object -Property LoadPercentage -Average | `
-#    ForEach-Object Average
-#}
-
-Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitle "Percentage"
+#$Datapoints = (1..100|Get-Random -Count 50)
+#Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitle "Percentage"
