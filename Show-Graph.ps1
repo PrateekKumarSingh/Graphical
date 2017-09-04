@@ -3,7 +3,7 @@
 Draws graph in the Powershell console
 
 .DESCRIPTION
-Inputs datapoints and draws colored coded graph in the Powershell console, which could be customized.
+Consumes datapoints and draws colored coded fully customizable graph in the Powershell console
 
 .PARAMETER Datapoints
 Array of data points which is to be plotted on the graph
