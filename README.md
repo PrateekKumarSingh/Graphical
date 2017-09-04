@@ -11,3 +11,8 @@ Inputs datapoints and draws graph on the Powershell console
 For example, in following image function `Show-Graph` takes data points as input and plot them on a 2D graph
 
 ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example1.png)
+
+
+You can also customize the labels on X and Y-Axis
+
+![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example2.png)
