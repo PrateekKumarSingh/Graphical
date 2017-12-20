@@ -35,10 +35,11 @@ Function Show-Graph {
     [alias("Graph")]
     Param(
             # Parameter help description
-            [Parameter(Mandatory=$true)]
-            [int[]] $Datapoints,
+            [Parameter(Mandatory=$true)] [int[]] $Datapoints,
             [String] $XAxisTitle = 'X-Axis',
-            [String] $YAxisTitle = 'Y Axis'
+            [String] $YAxisTitle = 'Y Axis',
+            [Int] $Step = 10,
+            [ValidateSet("Bar","Scatter")] [String] $Type = 'Bar'
     )
             
     $NumOfDatapoints = $Datapoints.Count
@@ -55,34 +56,31 @@ Function Show-Graph {
 
     If($XAxisTitle.Length -gt $XAxis.length-3){
         $XAxisLabel = "   "+$XAxisTitle
-    }else{
+    }
+    else{
         $XAxisLabel = "   "+(" "*(($XAxis.Length - $XAxisTitle.Length)/2))+$XAxisTitle
     }
     
     # Create a 2D Array to save datapoints  in a 2D format
-    $Array = New-Object 'object[,]' ($NumOfLabelsOnYAxis+1),$NumOfDatapoints
-    $Count = 0
-    $Datapoints | ForEach-Object {
-        $r = [Math]::Floor($_/10)
-        $Array[$r,$Count] = [char] 9608
-        1..$R | ForEach-Object {$Array[$_,$Count] = [char] 9608}
-        $Count++
+    switch($Type){
+        'Bar'       {$Array = Get-BarPlot -Datapoints $Datapoints -Step $Step}
+        'Scatter'   {$Array = Get-ScatterPlot -Datapoints $Datapoints -Step $Step}
     }
- 
+
     # Draw graph
-    For($i=10;$i -gt 0;$i--){
+    For($i=$Step;$i -gt 0;$i--){
         $Row = ''
-        For($j=0;$j -lt $NumOfDatapoints;$j++){
-            $Cell = $Array[$i,$j]
-            $String = If([String]::IsNullOrWhiteSpace($Cell)){' '}else{$Cell}
-            $Row = [string]::Concat($Row,$String)          
-        }
-        
+            For($j=0;$j -lt $NumOfDatapoints;$j++){
+                $Cell = $Array[$i,$j]
+                 $String = If([String]::IsNullOrWhiteSpace($Cell)){' '}else{$Cell}
+                 $Row = [string]::Concat($Row,$String)          
+            }
+    
         $YAxisLabel = $i*10
-        
+    
         # Condition to fix the spacing issue of a 3 digit vs 2 digit number [like 100 vs 90]  on the Y-Axis
         If("$YAxisLabel".length -lt 3){$YAxisLabel = (" "*(3-("$YAxisLabel".length)))+$YAxisLabel}
-        
+    
         If($i -in $YAxisTitleStartIdx..$YAxisTitleEndIdx){
             $YAxisLabelAlphabet = $YAxisTitle[$YAxisTitleAlphabetCounter]+" "
             $YAxisTitleAlphabetCounter++
@@ -90,17 +88,17 @@ Function Show-Graph {
         else {
             $YAxisLabelAlphabet = '  '
         }
-
+        #Write-Host $Row
         # To color the graph depending upon the datapoint value
         If ($i -gt 7) {Write-Host $YAxisLabelAlphabet -ForegroundColor DarkYellow -NoNewline  ;Write-Host "$YAxisLabel|" -NoNewline; Write-Host $Row -ForegroundColor Red}
         elseif ($i -le 7 -and $i -gt 4) {Write-Host $YAxisLabelAlphabet -ForegroundColor DarkYellow -NoNewline ;Write-Host "$YAxisLabel|" -NoNewline; Write-Host $Row -ForegroundColor Yellow}
         elseif($i -le 4 -and $i -ge 1) {Write-Host $YAxisLabelAlphabet -ForegroundColor DarkYellow -NoNewline ;Write-Host "$YAxisLabel|" -NoNewline; Write-Host $Row -ForegroundColor Green}
         else {Write-Host "$YAxisLabel|"}
-    }
-
-    $XAxis # Prints X-Axis horizontal line
-    Write-Host $XAxisLabel -ForegroundColor DarkYellow # Prints XAxisTitle
+        }
+    
+        $XAxis # Prints X-Axis horizontal line
+        Write-Host $XAxisLabel -ForegroundColor DarkYellow # Prints XAxisTitle
 }
 
 #$Datapoints = (1..100|Get-Random -Count 50)
-#Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitle "Percentage"
+Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitle "Percentage" -Type Scatter
