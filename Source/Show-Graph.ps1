@@ -97,27 +97,26 @@ Function Show-Graph {
         else {
             $YAxisLabelAlphabet = '  '
         }
+
+        $RangePercent = $i/$NumOfRows * 100
         
         If($ColorMap){
-            $NumOfRows
+            Foreach($key in $($ColorMap.Keys| Sort-Object)){
+                if($RangePercent -gt $key){
+                    
+                }
+            }
         }
         else{
-            $RangePercent = $i/$NumOfRows * 100
             # To color the graph depending upon the datapoint value
             If ($RangePercent -gt 80) {
                 Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Red' 'DarkYellow'
             }
-            elseif ($RangePercent-le 80 -and $RangePercent -gt 40) {
+            elseif($RangePercent-le 80 -and $RangePercent -gt 40) {
                 Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Yellow' 'DarkYellow' 
-                #Write-Host $YAxisLabelAlphabet -ForegroundColor DarkYellow -NoNewline
-                #Write-Host "$YAxisLabel|" -NoNewline
-                #Write-Host $Row -ForegroundColor Yellow
             }
             elseif($RangePercent -le 40 -and $RangePercent -ge 1) {
                 Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Green' 'DarkYellow'
-                #Write-Host $YAxisLabelAlphabet -ForegroundColor DarkYellow -NoNewline
-                #Write-Host "$YAxisLabel|" -NoNewline
-                #Write-Host $Row -ForegroundColor Green
             }
             else {
                 Write-Host "$YAxisLabel|"
