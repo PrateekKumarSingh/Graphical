@@ -5,4 +5,4 @@ Get-ChildItem "$PSScriptRoot\Source\" | ForEach-Object {
 }
 
 # Exporting the members and their aliases
-Export-ModuleMember -Function "*-*" -Alias *
+Export-ModuleMember -Function "Show-Graph" -Alias 'Graph'

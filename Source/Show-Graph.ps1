@@ -39,7 +39,8 @@ Function Show-Graph {
             [String] $XAxisTitle = 'X-Axis',
             [String] $YAxisTitle = 'Y Axis',
             [Int] $Step = 10,
-            [ValidateSet("Bar","Scatter")] [String] $Type = 'Bar'
+            [ValidateSet("Bar","Scatter")] [String] $Type = 'Bar',
+            [hashtable] $ColorMap
     )
             
     # Calculate Max, Min and Range of Y axis
@@ -75,8 +76,6 @@ Function Show-Graph {
         'Scatter'   {$Array = Get-ScatterPlot -Datapoints $Datapoints -Step $Step -StartOfRange $StartOfRange -EndofRange $EndofRange }
     }
     
-    
-
     # Draw graph
     For($i=$NumOfRows;$i -gt 0;$i--){
         $Row = ''
@@ -98,13 +97,34 @@ Function Show-Graph {
         else {
             $YAxisLabelAlphabet = '  '
         }
-        #Write-Host $Row
-        # To color the graph depending upon the datapoint value
-        If ($i -gt 7) {Write-Host $YAxisLabelAlphabet -ForegroundColor DarkYellow -NoNewline  ;Write-Host "$YAxisLabel|" -NoNewline; Write-Host $Row -ForegroundColor Red}
-        elseif ($i -le 7 -and $i -gt 4) {Write-Host $YAxisLabelAlphabet -ForegroundColor DarkYellow -NoNewline ;Write-Host "$YAxisLabel|" -NoNewline; Write-Host $Row -ForegroundColor Yellow}
-        elseif($i -le 4 -and $i -ge 1) {Write-Host $YAxisLabelAlphabet -ForegroundColor DarkYellow -NoNewline ;Write-Host "$YAxisLabel|" -NoNewline; Write-Host $Row -ForegroundColor Green}
-        else {Write-Host "$YAxisLabel|"}
+        
+        If($ColorMap){
+            $NumOfRows
         }
+        else{
+            $RangePercent = $i/$NumOfRows * 100
+            # To color the graph depending upon the datapoint value
+            If ($RangePercent -gt 80) {
+                Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Red' 'DarkYellow'
+            }
+            elseif ($RangePercent-le 80 -and $RangePercent -gt 40) {
+                Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Yellow' 'DarkYellow' 
+                #Write-Host $YAxisLabelAlphabet -ForegroundColor DarkYellow -NoNewline
+                #Write-Host "$YAxisLabel|" -NoNewline
+                #Write-Host $Row -ForegroundColor Yellow
+            }
+            elseif($RangePercent -le 40 -and $RangePercent -ge 1) {
+                Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Green' 'DarkYellow'
+                #Write-Host $YAxisLabelAlphabet -ForegroundColor DarkYellow -NoNewline
+                #Write-Host "$YAxisLabel|" -NoNewline
+                #Write-Host $Row -ForegroundColor Green
+            }
+            else {
+                Write-Host "$YAxisLabel|"
+            }
+        }
+
+    }
     
         $XAxis # Prints X-Axis horizontal line
         Write-Host $XAxisLabel -ForegroundColor DarkYellow # Prints XAxisTitle
