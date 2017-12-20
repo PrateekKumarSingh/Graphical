@@ -110,7 +110,7 @@ Function Show-Graph {
         Write-Host $XAxisLabel -ForegroundColor DarkYellow # Prints XAxisTitle
 }
 
-$Datapoints = (121..278|Get-Random -Count 50)
-Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitle "Percentage" -Type Bar -Step 10
-Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitle "Percentage" -Type Scatter
+#$Datapoints = (121..278|Get-Random -Count 50)
+#Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitle "Percentage" -Type Bar -Step 10
+#Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitle "Percentage" -Type Scatter
 

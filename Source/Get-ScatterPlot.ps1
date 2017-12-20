@@ -1,6 +1,6 @@
 Function Get-ScatterPlot {
     [cmdletbinding()]
-    [alias("bar")]
+    [alias("scatter")]
     Param(
             # Parameter help description
             [Parameter(Mandatory=$true)]
