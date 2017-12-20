@@ -42,18 +42,26 @@ Function Show-Graph {
             [ValidateSet("Bar","Scatter")] [String] $Type = 'Bar'
     )
             
+    # Calculate Max, Min and Range of Y axis
     $NumOfDatapoints = $Datapoints.Count
-    $NumOfLabelsOnYAxis = 10
+    $Metric = $Datapoints | Measure-Object -Maximum -Minimum
+    $EndofRange = $Metric.Maximum + ($Step - $Metric.Maximum % $Step)
+    $StartOfRange = $Metric.Minimum - ($Metric.Minimum % $Step)
+    $difference =  $EndofRange - $StartOfRange
+    $NumOfRows = $difference/($Step)
+
+    # Calculate label lengths
+    $NumOfLabelsOnYAxis = $NumOfRows
     $XAxis = "   "+"-"*($NumOfDatapoints+3) 
     $YAxisTitleAlphabetCounter = 0
     $YAxisTitleStartIdx = 1
     $YAxisTitleEndIdx = $YAxisTitleStartIdx + $YAxisTitle.Length -1
-    
+
     If($YAxisTitle.Length -gt $NumOfLabelsOnYAxis){
         Write-Warning "No. Alphabets in YAxisTitle [$($YAxisTitle.Length)] can't be greator than no. of Labels on Y-Axis [$NumOfLabelsOnYAxis]"
         Write-Warning "YAxisTitle will be cropped"
     }
-
+    
     If($XAxisTitle.Length -gt $XAxis.length-3){
         $XAxisLabel = "   "+$XAxisTitle
     }
@@ -63,20 +71,22 @@ Function Show-Graph {
     
     # Create a 2D Array to save datapoints  in a 2D format
     switch($Type){
-        'Bar'       {$Array = Get-BarPlot -Datapoints $Datapoints -Step $Step}
-        'Scatter'   {$Array = Get-ScatterPlot -Datapoints $Datapoints -Step $Step}
+        'Bar'       {$Array = Get-BarPlot -Datapoints $Datapoints -Step $Step -StartOfRange $StartOfRange -EndofRange $EndofRange }
+        'Scatter'   {$Array = Get-ScatterPlot -Datapoints $Datapoints -Step $Step -StartOfRange $StartOfRange -EndofRange $EndofRange }
     }
+    
+    
 
     # Draw graph
-    For($i=$Step;$i -gt 0;$i--){
+    For($i=$NumOfRows;$i -gt 0;$i--){
         $Row = ''
-            For($j=0;$j -lt $NumOfDatapoints;$j++){
+            For($j=0;$j -le $NumOfDatapoints;$j++){
                 $Cell = $Array[$i,$j]
                  $String = If([String]::IsNullOrWhiteSpace($Cell)){' '}else{$Cell}
                  $Row = [string]::Concat($Row,$String)          
             }
     
-        $YAxisLabel = $i*10
+        $YAxisLabel = $StartOfRange + $i*$Step
     
         # Condition to fix the spacing issue of a 3 digit vs 2 digit number [like 100 vs 90]  on the Y-Axis
         If("$YAxisLabel".length -lt 3){$YAxisLabel = (" "*(3-("$YAxisLabel".length)))+$YAxisLabel}
@@ -100,5 +110,7 @@ Function Show-Graph {
         Write-Host $XAxisLabel -ForegroundColor DarkYellow # Prints XAxisTitle
 }
 
-#$Datapoints = (1..100|Get-Random -Count 50)
+$Datapoints = (121..278|Get-Random -Count 50)
+Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitle "Percentage" -Type Bar -Step 10
 Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitle "Percentage" -Type Scatter
+
