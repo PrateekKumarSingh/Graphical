@@ -9,7 +9,7 @@
 [CmdLetBinding()]
 Param (
     [ValidateNotNullOrEmpty()]
-    [String]$ModuleName = 'Gridify',
+    [String]$ModuleName = 'Graphical',
     [String]$InstallDirectory,
     [ValidateNotNullOrEmpty()]
     [String]$GitPath = 'https://raw.githubusercontent.com/PrateekKumarSingh/Graphical/master'
@@ -22,11 +22,13 @@ $VerbosePreference = 'continue'
         Write-Verbose "$ModuleName module installation started"
 
         $Files = @(
-            'Gridify.psd1',
-            'Gridify.psm1',
+            'Graphical.psd1',
+            'Graphical.psm1',
             'README.md',
-            'Source/Show-Grap.ps1',
-            'Source/Set-GridLayout.ps1'
+            'Source/Show-Graph.ps1',
+            'Source/Get-BarPlot.ps1',
+            'Source/Get-ScatterPlot.ps1',
+            'Source/UtilityFunctions.ps1'
         )
     }
     Catch {
