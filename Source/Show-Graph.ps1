@@ -208,7 +208,7 @@ Function Show-Graph {
     Write-Host $XAxis # Prints X-Axis horizontal line
     Write-Host $XAxisLabel # Prints X-Axis horizontal line
     Write-Host $XAxisTitle -ForegroundColor DarkYellow # Prints XAxisTitle
-    if($GraphTitle){        
+    if($GraphTitle){
         $GraphTitle = " " * $LengthOfMaxYAxisLabel + (CenterAlignString "[$GraphTitle]" $XAxis.Length)
         Write-Host $GraphTitle # Prints XAxisTitle
     }
