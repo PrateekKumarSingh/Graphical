@@ -1,17 +1,28 @@
 class Graph {
     # properties
+
+    [String] $XAxisTitle = 'Label X-Axis'
+    [String] $YAxisTitle = 'Y Axis'
+    [String] $GraphTitle = 'Untitled'
+    [Int] $XAxisStep = 10
+    [Int] $YAxisStep = 10
+
     # constructor
 
-    Plot ([int[]] $Datapoints, [String] $XAxisTitle = 'X-Axis', [String] $YAxisTitle = 'Y Axis', [String] $GraphTitle, [Int] $XAxisStep = 10, [Int] $YAxisStep = 10, [String] $Type = 'Bar', [Hashtable] $ColorMap, [bool] $HorizontalLines)
+    Plot ([int[]] $Datapoints, [String] $Type = 'Bar', [Hashtable] $ColorMap, [bool] $HorizontalLines)
     {
+
+        $Title = $this.GraphTitle
+        $YAxisTitle = $this.YAxisTitle
+        $GraphTitle = $this.GraphTitle
 
         # Calculate Max, Min and Range of Y axis
         $NumOfDatapoints = $Datapoints.Count
         $Metric = $Datapoints | Measure-Object -Maximum -Minimum
-        $EndofRange = $Metric.Maximum + ($YAxisStep - $Metric.Maximum % $YAxisStep)
-        $StartOfRange = $Metric.Minimum - ($Metric.Minimum % $YAxisStep)
+        $EndofRange = $Metric.Maximum + ($this.YAxisStep - $Metric.Maximum % $this.YAxisStep)
+        $StartOfRange = $Metric.Minimum - ($Metric.Minimum % $this.YAxisStep)
         $difference =  $EndofRange - $StartOfRange
-        $NumOfRows = $difference/($YAxisStep)
+        $NumOfRows = $difference/($this.YAxisStep)
 
         # Calculate label lengths
         $NumOfLabelsOnYAxis = $NumOfRows
@@ -19,39 +30,39 @@ class Graph {
         #$XAxis = " " * $($LengthOfMaxYAxisLabel + 3) + [char]9492 + ([char]9516).ToString() * $NumOfDatapoints
 
         $YAxisTitleAlphabetCounter = 0
-        $YAxisTitleStartIdx, $YAxisTitleEndIdx = CenterAlignStringReturnIndices -String $YAxisTitle -Length $NumOfRows
+        $YAxisTitleStartIdx, $YAxisTitleEndIdx = CenterAlignStringReturnIndices -String $this.YAxisTitle -Length $NumOfRows
         #$YAxisTitleStartIdx = [Math]::Round(($NumOfRows + ($YAxisTitle.Length -1)) / 2 )
         #$YAxisTitleEndIdx = $YAxisTitleStartIdx - ($YAxisTitle.Length -1)
 
-        If($YAxisTitle.Length -gt $NumOfLabelsOnYAxis){
-            Write-Warning "No. Alphabets in YAxisTitle [$($YAxisTitle.Length)] can't be greator than no. of Labels on Y-Axis [$NumOfLabelsOnYAxis]"
+        If($this.YAxisTitle.Length -gt $NumOfLabelsOnYAxis){
+            Write-Warning "No. Alphabets in YAxisTitle [$($this.YAxisTitle.Length)] can't be greator than no. of Labels on Y-Axis [$NumOfLabelsOnYAxis]"
             Write-Warning "YAxisTitle will be cropped"
         }
 
         # Create a 2D Array to save datapoints  in a 2D format
         $Array = @()
         switch($Type){
-            'Bar'       {$Array = Get-BarPlot -Datapoints $Datapoints -Step $YAxisStep -StartOfRange $StartOfRange -EndofRange $EndofRange }
-            'Scatter'   {$Array = Get-ScatterPlot -Datapoints $Datapoints -Step $YAxisStep -StartOfRange $StartOfRange -EndofRange $EndofRange }
+            'Bar'       {$Array = Get-BarPlot -Datapoints $Datapoints -Step $this.YAxisStep -StartOfRange $StartOfRange -EndofRange $EndofRange }
+            'Scatter'   {$Array = Get-ScatterPlot -Datapoints $Datapoints -Step $this.YAxisStep -StartOfRange $StartOfRange -EndofRange $EndofRange }
         }
 
         # Preparing the step markings on the X-Axis
-        $Increment = $XAxisStep
+        $Increment = $this.XAxisStep
         $XAxisLabel = " " * ($LengthOfMaxYAxisLabel + 4)
         $XAxis = " " * ($LengthOfMaxYAxisLabel + 3) + [char]9492
 
         For($Label =1;$Label -le $NumOfDatapoints;$Label++){
-            if ([math]::floor($Label/$XAxisStep) ){
+            if ([math]::floor($Label/$this.XAxisStep) ){
                 $XAxisLabel +=  $Label.tostring().PadLeft($Increment)
                 $XAxis += ([char]9516).ToString()
-                $XAxisStep+=$Increment
+                $this.XAxisStep+=$Increment
             }
             else{
                 $XAxis += [Char]9472
             }
         }
 
-        $XAxisTitle = " "*$LengthOfMaxYAxisLabel + (CenterAlignString $XAxisTitle $XAxis.Length)
+        $this.XAxisTitle = " "*$LengthOfMaxYAxisLabel + (CenterAlignString $this.XAxisTitle $XAxis.Length)
 
 
         For($i=$NumOfRows;$i -gt 0;$i--){
@@ -72,11 +83,11 @@ class Graph {
                 $Row = [string]::Concat($Row,$String)
             }
             
-            $YAxisLabel = $StartOfRange + $i*$YAxisStep
+            $YAxisLabel = $StartOfRange + $i*$this.YAxisStep
             
             
             If($i -in $YAxisTitleStartIdx..$YAxisTitleEndIdx){
-                $YAxisLabelAlphabet = $YAxisTitle[$YAxisTitleAlphabetCounter]
+                $YAxisLabelAlphabet = $this.YAxisTitle[$YAxisTitleAlphabetCounter]
                 $YAxisTitleAlphabetCounter++
             }
             else {
@@ -139,10 +150,10 @@ class Graph {
         
         Write-Host $XAxis # Prints X-Axis horizontal line
         Write-Host $XAxisLabel # Prints X-Axis horizontal line
-        Write-Host $XAxisTitle -ForegroundColor DarkYellow # Prints XAxisTitle
-        if($GraphTitle){
-            $GraphTitle = " " * $LengthOfMaxYAxisLabel + (CenterAlignString "[$GraphTitle]" $XAxis.Length)
-            Write-Host $GraphTitle # Prints XAxisTitle
+        Write-Host $this.XAxisTitle -ForegroundColor DarkYellow # Prints XAxisTitle
+        if($Title){
+            $Title = " " * $LengthOfMaxYAxisLabel + (CenterAlignString "[$Title]" $XAxis.Length)
+            Write-Host $Title # Prints XAxisTitle
         }
     }
 

@@ -11,6 +11,7 @@ Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitl
 8000..9000 | ForEach-Object{write-host $([char]$_) ' - ' $_}
 
 $obj = [Graph]::new()
-$obj.Plot
-$obj.Plot($Datapoints,"Avg. CPU utilization","Percent","Consumption",10,30,'Bar',$null,$null)
-$obj.Plot($Datapoints,"Avg. CPU utilization","Percent","Consumption",10,30,'Scatter',$null,$null)
+$obj.YAxisStep = 30
+$obj.XAxisStep = 10
+$obj.Plot($Datapoints,'Bar',$null,$null)
+$obj.Plot($Datapoints,'Scatter',$null,$null)
