@@ -29,7 +29,7 @@ Parameter description
 .PARAMETER ColorMap
 Parameter description
 
-.PARAMETER AddHorizontalLines
+.PARAMETER HorizontalLines
 Parameter description
 
 .EXAMPLE
@@ -69,7 +69,7 @@ Function Show-Graph {
             [Int] $YAxisStep = 10,
             [ValidateSet("Bar","Scatter")] [String] $Type = 'Bar',
             [Hashtable] $ColorMap,
-            [Switch] $AddHorizontalLines
+            [Switch] $HorizontalLines
     )
             
     # Calculate Max, Min and Range of Y axis
