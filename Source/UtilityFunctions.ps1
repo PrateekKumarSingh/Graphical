@@ -10,8 +10,10 @@ Function CenterAlignStringReturnIndices ($String, $Length) {
 
 Function Write-Graph($YAxisLabelAlphabet, $YAxisLabel, $Row, $RowColor, $LabelColor)
 {
+    Write-Host $([char]9474) -NoNewline
     Write-Host $YAxisLabelAlphabet -ForegroundColor $LabelColor -NoNewline
     Write-Host "$($YAxisLabel.tostring().PadLeft($LengthOfMaxYAxisLabel+2) + [Char]9508)" -NoNewline
     ##Write-Host "$YAxisLabel|" -NoNewline
-    Write-Host $Row -ForegroundColor $RowColor
+    Write-Host $Row -ForegroundColor $RowColor -NoNewline
+    Write-Host " " $([char]9474) 
 }
