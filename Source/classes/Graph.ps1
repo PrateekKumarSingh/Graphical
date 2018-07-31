@@ -13,8 +13,8 @@ class Graph {
     {
 
         $Title = $this.GraphTitle
-        $YAxisTitle = $this.YAxisTitle
-        $GraphTitle = $this.GraphTitle
+        $Title_x = $this.XAxisTitle
+        $Title_y = $this.YAxisTitle
 
         # Calculate Max, Min and Range of Y axis
         $NumOfDatapoints = $Datapoints.Count
@@ -30,14 +30,25 @@ class Graph {
         #$XAxis = " " * $($LengthOfMaxYAxisLabel + 3) + [char]9492 + ([char]9516).ToString() * $NumOfDatapoints
 
         $YAxisTitleAlphabetCounter = 0
-        $YAxisTitleStartIdx, $YAxisTitleEndIdx = CenterAlignStringReturnIndices -String $this.YAxisTitle -Length $NumOfRows
+        $YAxisTitleStartIdx, $YAxisTitleEndIdx = CenterAlignStringReturnIndices -String $Title_y -Length $NumOfRows
         #$YAxisTitleStartIdx = [Math]::Round(($NumOfRows + ($YAxisTitle.Length -1)) / 2 )
         #$YAxisTitleEndIdx = $YAxisTitleStartIdx - ($YAxisTitle.Length -1)
 
-        If($this.YAxisTitle.Length -gt $NumOfLabelsOnYAxis){
-            Write-Warning "No. Alphabets in YAxisTitle [$($this.YAxisTitle.Length)] can't be greator than no. of Labels on Y-Axis [$NumOfLabelsOnYAxis]"
+        If($Title_y.Length -gt $NumOfLabelsOnYAxis){
+            Write-Warning "No. Alphabets in YAxisTitle [$($Title_y.Length)] can't be greator than no. of Labels on Y-Axis [$NumOfLabelsOnYAxis]"
             Write-Warning "YAxisTitle will be cropped"
         }
+
+        # prepare chart boundaries
+        $TopLeft = [char]9150
+        $BottomLeft = [char]9151
+        $TopRight = [char]9163
+        $BottomRight = [char]9164
+        $VerticalEdge = [char]9145
+        $TopEdge = [char]9620
+        $BottomEdge = [char]9601
+
+        Write-Host $TopLeft $Array
 
         # Create a 2D Array to save datapoints  in a 2D format
         $Array = @()
@@ -62,7 +73,7 @@ class Graph {
             }
         }
 
-        $this.XAxisTitle = " "*$LengthOfMaxYAxisLabel + (CenterAlignString $this.XAxisTitle $XAxis.Length)
+        $Title_x = " "*$LengthOfMaxYAxisLabel + (CenterAlignString $Title_x $XAxis.Length)
 
 
         For($i=$NumOfRows;$i -gt 0;$i--){
@@ -87,7 +98,7 @@ class Graph {
             
             
             If($i -in $YAxisTitleStartIdx..$YAxisTitleEndIdx){
-                $YAxisLabelAlphabet = $this.YAxisTitle[$YAxisTitleAlphabetCounter]
+                $YAxisLabelAlphabet = $Title_y[$YAxisTitleAlphabetCounter]
                 $YAxisTitleAlphabetCounter++
             }
             else {
@@ -150,10 +161,10 @@ class Graph {
         
         Write-Host $XAxis # Prints X-Axis horizontal line
         Write-Host $XAxisLabel # Prints X-Axis horizontal line
-        Write-Host $this.XAxisTitle -ForegroundColor DarkYellow # Prints XAxisTitle
+        Write-Host $Title_x -ForegroundColor DarkYellow # Prints XAxisTitle
         if($Title){
             $Title = " " * $LengthOfMaxYAxisLabel + (CenterAlignString "[$Title]" $XAxis.Length)
-            Write-Host $Title # Prints XAxisTitle
+            Write-Host $Title # Prints  graph title
         }
     }
 
