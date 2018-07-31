@@ -68,7 +68,7 @@ Function Show-Graph {
                 }
             })] [Int] $XAxisStep = 10,
             [Int] $YAxisStep = 10,
-            [ValidateSet("Bar","Scatter")] [String] $Type = 'Bar',
+            [ValidateSet("Bar","Scatter","Line")] [String] $Type = 'Bar',
             [Hashtable] $ColorMap,
             [Switch] $HorizontalLines
     )
@@ -105,6 +105,7 @@ Function Show-Graph {
     switch($Type){
         'Bar'       {$Array = Get-BarPlot -Datapoints $Datapoints -Step $YAxisStep -StartOfRange $StartOfRange -EndofRange $EndofRange }
         'Scatter'   {$Array = Get-ScatterPlot -Datapoints $Datapoints -Step $YAxisStep -StartOfRange $StartOfRange -EndofRange $EndofRange }
+        'Line'      {$Array = Get-LinePlot -Datapoints $Datapoints -Step $YAxisStep -StartOfRange $StartOfRange -EndofRange $EndofRange }
     }
     
     # Preparing the step markings on the X-Axis
@@ -219,11 +220,11 @@ Function Show-Graph {
     [String]::Concat($VerticalEdge,$XAxis,"  ",$VerticalEdge) # Prints X-Axis horizontal line
     [string]::Concat($VerticalEdge,$XAxisLabel,"  ",$VerticalEdge) # Prints X-Axis step labels
 
-    Write-Host $VerticalEdge -NoNewline
-
-    # Position the x-axis label at the center of the axis
-    $XAxisTitle = " "*$LengthOfMaxYAxisLabel + (CenterAlignString $XAxisTitle $XAxis.Length)        
-    if($XAxisTitle){
+    
+    if(![String]::IsNullOrWhiteSpace($XAxisTitle)){
+        # Position the x-axis label at the center of the axis
+        $XAxisTitle = " "*$LengthOfMaxYAxisLabel + (CenterAlignString $XAxisTitle $XAxis.Length)        
+        Write-Host $VerticalEdge -NoNewline
         Write-Host $XAxisTitle -ForegroundColor DarkYellow -NoNewline # Prints XAxisTitle
         Write-Host $(" "*$(($LengthOfMaxYAxisLabel + $XAxis.length) - $XAxisTitle.Length - 2)) $VerticalEdge
     }

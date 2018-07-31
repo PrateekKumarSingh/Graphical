@@ -1,7 +1,7 @@
-Import-Module .\Graphical.psm1 -Verbose
+Import-Module c:\data\powershell\repository\Graphical\Graphical.psm1 -Verbose
 $Datapoints = (0..100|Get-Random -Count 50)
 
-Show-Graph -Datapoints $Datapoints -GraphTitle "CPU" -Type Bar
+Show-Graph -Datapoints $Datapoints -GraphTitle "CPU" -Type Line
 Show-Graph -Datapoints $Datapoints -GraphTitle 'Memory' -Type Scatter
 
 9600, 9604, 9632, 9642, 9679, 9726 | ForEach-Object{write-host $([char]$_) ' - ' $_}
