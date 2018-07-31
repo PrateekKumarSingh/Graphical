@@ -48,7 +48,7 @@ class Graph {
         $TopEdge = [char]9620
         $BottomEdge = [char]9601
 
-        Write-Host $TopLeft $Array
+        #Write-Host $TopLeft $Array
 
         # Create a 2D Array to save datapoints  in a 2D format
         $Array = @()

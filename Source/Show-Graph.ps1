@@ -36,10 +36,11 @@ Parameter description
 Show-Graph -Datapoints $Datapoints
 
 .EXAMPLE
-Show-Graph -Datapoints $Datapoints -XAxisTitle "Avg. CPU utilization" -YAxisTitle "Percentage"
+Show-Graph -Datapoints $Datapoints -YAxisTitle "Percentage"
 
 .NOTES
-Blog: https://geekeefy.wordpress.com/
+Blog: https://RidiCurious.com/
+Github: https://github.com/PrateekKumarSingh/Graphical
 Author: https://twitter.com/SinghPrateik
 Features and Benefits:
 * Color-coded output depending upon the Value of Datapoint
@@ -55,9 +56,9 @@ Function Show-Graph {
     Param(
             # Parameter help description
             [Parameter(Mandatory=$true, ValueFromPipeline)] [int[]] $Datapoints,
-            [String] $XAxisTitle = 'X-Axis',
-            [String] $YAxisTitle = 'Y Axis',
-            [String] $GraphTitle,
+            [String] $XAxisTitle,
+            [String] $YAxisTitle,
+            [String] $GraphTitle = 'Untitled',
             [ValidateScript({
                 if($_ -le 5){
                 Throw "Can not set XAxisStep less than or equals to 5"
@@ -71,7 +72,15 @@ Function Show-Graph {
             [Hashtable] $ColorMap,
             [Switch] $HorizontalLines
     )
-            
+
+    # graph boundary marks
+    $TopLeft = [char]9484
+    $BottomLeft = [char]9492
+    $TopRight = [char]9488
+    $BottomRight = [char]9496
+    $VerticalEdge = [char]9474
+    $TopEdge = $BottomEdge = [char]9472
+
     # Calculate Max, Min and Range of Y axis
     $NumOfDatapoints = $Datapoints.Count
     $Metric = $Datapoints | Measure-Object -Maximum -Minimum
@@ -83,18 +92,14 @@ Function Show-Graph {
     # Calculate label lengths
     $NumOfLabelsOnYAxis = $NumOfRows
     $LengthOfMaxYAxisLabel = (($Datapoints | Measure-Object -Maximum).Maximum).tostring().length
-    #$XAxis = " " * $($LengthOfMaxYAxisLabel + 3) + [char]9492 + ([char]9516).ToString() * $NumOfDatapoints
     
     $YAxisTitleAlphabetCounter = 0
     $YAxisTitleStartIdx, $YAxisTitleEndIdx = CenterAlignStringReturnIndices -String $YAxisTitle -Length $NumOfRows
-    #$YAxisTitleStartIdx = [Math]::Round(($NumOfRows + ($YAxisTitle.Length -1)) / 2 )
-    #$YAxisTitleEndIdx = $YAxisTitleStartIdx - ($YAxisTitle.Length -1)
     
     If($YAxisTitle.Length -gt $NumOfLabelsOnYAxis){
         Write-Warning "No. Alphabets in YAxisTitle [$($YAxisTitle.Length)] can't be greator than no. of Labels on Y-Axis [$NumOfLabelsOnYAxis]"
         Write-Warning "YAxisTitle will be cropped"
     }
-    
     
     # Create a 2D Array to save datapoints  in a 2D format
     switch($Type){
@@ -117,11 +122,16 @@ Function Show-Graph {
             $XAxis += [Char]9472
         }
     }
+
+    # calculate boundaries of the graph
+    $TopBoundaryLength = $XAxis.Length - $GraphTitle.Length
+    $BottomBoundaryLength = $XAxis.Length + 2
     
-    $XAxisTitle = " "*$LengthOfMaxYAxisLabel + (CenterAlignString $XAxisTitle $XAxis.Length)
-    #"`$YAxisTitleStartIdx:$YAxisTitleStartIdx `$YAxisTitleEndIdx:$YAxisTitleEndIdx `$NumOfRows:$NumOfRows"
+    # draw top boundary
+    [string]::Concat($TopLeft," ",$GraphTitle," ",$([string]$TopEdge * $TopBoundaryLength),$TopRight)
+    [String]::Concat($VerticalEdge,$(" "*$($XAxis.length+2)),$VerticalEdge) # extra line to add space between top-boundary and the graph
     
-    # Drawing the graph
+    # draw the graph
     For($i=$NumOfRows;$i -gt 0;$i--){
         $Row = ''
         For($j=0;$j -lt $NumOfDatapoints;$j++){
@@ -143,7 +153,8 @@ Function Show-Graph {
         $YAxisLabel = $StartOfRange + $i*$YAxisStep
         
         
-        If($i -in $YAxisTitleStartIdx..$YAxisTitleEndIdx){
+        # add Y-Axis title alphabets if it exists in a row
+        If($i -in $YAxisTitleStartIdx..$YAxisTitleEndIdx -and $YAxisTitle){
             $YAxisLabelAlphabet = $YAxisTitle[$YAxisTitleAlphabetCounter]
             $YAxisTitleAlphabetCounter++
         }
@@ -205,13 +216,21 @@ Function Show-Graph {
         
     }
     
-    Write-Host $XAxis # Prints X-Axis horizontal line
-    Write-Host $XAxisLabel # Prints X-Axis horizontal line
-    Write-Host $XAxisTitle -ForegroundColor DarkYellow # Prints XAxisTitle
-    if($GraphTitle){
-        $GraphTitle = " " * $LengthOfMaxYAxisLabel + (CenterAlignString "[$GraphTitle]" $XAxis.Length)
-        Write-Host $GraphTitle # Prints XAxisTitle
+    [String]::Concat($VerticalEdge,$XAxis,"  ",$VerticalEdge) # Prints X-Axis horizontal line
+    [string]::Concat($VerticalEdge,$XAxisLabel,"  ",$VerticalEdge) # Prints X-Axis step labels
+
+    Write-Host $VerticalEdge -NoNewline
+
+    # Position the x-axis label at the center of the axis
+    $XAxisTitle = " "*$LengthOfMaxYAxisLabel + (CenterAlignString $XAxisTitle $XAxis.Length)        
+    if($XAxisTitle){
+        Write-Host $XAxisTitle -ForegroundColor DarkYellow -NoNewline # Prints XAxisTitle
+        Write-Host $(" "*$(($LengthOfMaxYAxisLabel + $XAxis.length) - $XAxisTitle.Length - 2)) $VerticalEdge
     }
+    
+    # bottom boundary
+    [string]::Concat($BottomLeft,$([string]$BottomEdge * $BottomBoundaryLength),$BottomRight)
+    
 }
 
 #$Datapoints = (211..278|Get-Random -Count 50)
