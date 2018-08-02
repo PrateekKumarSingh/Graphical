@@ -27,6 +27,7 @@ $VerbosePreference = 'continue'
             'README.md',
             'Source/Show-Graph.ps1',
             'Source/Get-BarPlot.ps1',
+            'Source/Get-LinePlot.ps1',
             'Source/Get-ScatterPlot.ps1',
             'Source/UtilityFunctions.ps1'
         )
