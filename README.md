@@ -1,7 +1,21 @@
 # Powershell Console/Terminal Graph
-Inputs data points and draws graph on the Powershell console
+Consumes data points as input and plots them on a 2D graph in the Powershell console
 
-## Features and Benefits
+Type of Graphs Available -
+
+1. Scatter
+
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Scatter.jpg)
+
+2. Bar
+
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Bar.jpg)
+
+3. Line
+
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Line.jpg)
+
+## Features
 * Color-coded output depending upon the Value of data point
 * Colors codes can be customized by passing a color-map hash table
 * Custom X an Y-Axis labels
@@ -11,6 +25,7 @@ Inputs data points and draws graph on the Powershell console
 * Independent of PowerShell version, and Works on PowerShell Core (Windows\Linux)
 
 For example, in the function `Show-Graph` takes data points as input and plot them on a 2D graph
+
 ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example1.jpg)
 
 You can also customize the labels on X and Y-Axis and provide a graph title
@@ -22,6 +37,13 @@ The function `Show-Graph` can consume data points, generated during script execu
 ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example3.jpg)
 
 
-# To Do
+## Installation
 
-* Soon to be uploaded to PowerShell Gallery, stay tuned!
+### [PowerShell v5](https://www.microsoft.com/en-us/download/details.aspx?id=50395) and Later
+Soon to be uploaded to PowerShell Gallery, stay tuned! But you can clone this repository.
+
+### PowerShell v4 and Earlier
+To install to your personal modules folder run:
+```PowerShell
+iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/PrateekKumarSingh/Graphical/master/Install.ps1')
+```
