@@ -5,7 +5,7 @@ Show-Graph -Datapoints $Datapoints -GraphTitle "CPU" -Type Line
 Show-Graph -Datapoints $Datapoints -GraphTitle 'Memory' -Type Scatter -XAxisTitle time
 9600, 9604, 9632, 9642, 9679, 9726 | ForEach-Object{write-host $([char]$_) ' - ' $_}
 
-9000..9500 | ForEach-Object{write-host $([char]$_) ' - ' $_}
+9500..9700 | ForEach-Object{write-host $([char]$_) ' - ' $_}
 
 9581..9584| ForEach-Object{write-host $([char]$_) ' - ' $_}; 
 
