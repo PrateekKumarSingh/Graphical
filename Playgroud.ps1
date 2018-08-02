@@ -1,13 +1,43 @@
 Import-Module c:\data\powershell\repository\Graphical\Graphical.psm1 -Verbose
-$Datapoints = (0..100|Get-Random -Count 50)
-
+$Datapoints = Get-Content C:\Temp\data.txt
 Show-Graph -Datapoints $Datapoints -GraphTitle "CPU" -Type Line
-Show-Graph -Datapoints $Datapoints -GraphTitle 'Memory' -Type Scatter
 
+Show-Graph -Datapoints $Datapoints -GraphTitle 'Memory' -Type Scatter -XAxisTitle time
 9600, 9604, 9632, 9642, 9679, 9726 | ForEach-Object{write-host $([char]$_) ' - ' $_}
 
-9400..9600 | ForEach-Object{write-host $([char]$_) ' - ' $_}
+9000..9500 | ForEach-Object{write-host $([char]$_) ' - ' $_}
 
+9581..9584| ForEach-Object{write-host $([char]$_) ' - ' $_}; 
+
+$lower = [char]9149
+$upper = [char]9146
+
+[string]::Concat($lower,$upper,$leftlink)
+
+
+
+$leftlink = [char]9144
+$rightlink = [char]9145
+$up_lefthalf = [char]9163
+$down_lefthalf = [char]9164
+$up_righthalf = [char]9150
+$down_righthalf = [char]9151
+$upper_link = [char]9589
+$lower_link = [char]9591
+$link = '|'
+
+
+$up_lefthalf;$down_lefthalf;$up_righthalf;$down_righthalf;$link, $leftlink;$rightlink
+
+$up_upperhalf = [char]9581
+$down_upperhalf = [char]9582
+$up_lowerhalf = [char]9583
+$down_lowerhalf = [char]9584
+$upper_link = [char]9589
+$lower_link = [char]9591
+$link = '|'
+
+$up_upperhalf;$down_upperhalf;$up_lowerhalf;$down_lowerhalf;$upper_link;$lower_link;$link
 # PI chart
 10250..10495 | ForEach-Object{write-host $([char]$_) ' - ' $_}
 
