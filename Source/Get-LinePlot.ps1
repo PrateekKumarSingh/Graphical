@@ -23,6 +23,7 @@ Function Get-LinePlot {
 
     $leftlink = [char]9144
     $rightlink = [char]9145
+    #$rightlink = [char]9621
     $up_lefthalf = [char]9163
     $down_lefthalf = [char]9164
     $up_righthalf = [char]9150
@@ -75,9 +76,9 @@ Function Get-LinePlot {
         $LowerHalf = $Datapoints[$i]%$Step -in $(1..$HalfStep)
         
         if($LowerHalf){
-            $Array[$RowIndex,$i] = [char] 9148
+            $Array[$RowIndex,$i] = [char] 9604
         }else{
-            $Array[$RowIndex,$i] = [char] 9146
+            $Array[$RowIndex,$i] = [char] 9608
         }
         
         # To get a bar fill all the same row indices of 2D array under and including datapoint
@@ -91,7 +92,7 @@ Function Get-LinePlot {
             write-host " DOWN [$($RowIndex-1)-$($RowIndexNextItem+1)] RangeDiff: $RangeDiff" -ForegroundColor Green
             if($RangeDiff -notin 0,1){
                 Foreach($j in $($RowIndex-1)..$($RowIndexNextItem+1)){
-                    $Array[$j,$i] = $rightlink
+                    $Array[$j,$i] = [char] 9616
                 }
             }
         }elseif($RowIndex -lt $RowIndexNextItem){
@@ -99,7 +100,7 @@ Function Get-LinePlot {
             write-host " UP [$($RowIndex+1)-$($RowIndexNextItem-1)] RangeDiff: $RangeDiff" -ForegroundColor Green
             if($RangeDiff -notin 0,1){
                 Foreach($j in $($RowIndex+1)..$($RowIndexNextItem-1)){
-                    $Array[$j,$i] = $rightlink
+                    $Array[$j,$i] = [char] 9616
                 }
             }
         }
