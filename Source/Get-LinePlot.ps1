@@ -75,11 +75,11 @@ Function Get-LinePlot {
         # use a half marker is datapoint falls in less than equals half of the step
         $LowerHalf = $Datapoints[$i]%$Step -in $(1..$HalfStep)
         
-        if($LowerHalf){
-            $Array[$RowIndex,$i] = [char] 9604
-        }else{
-            $Array[$RowIndex,$i] = [char] 9608
-        }
+        #if($LowerHalf){
+        #    $Array[$RowIndex,$i] = [char] 9608
+        #}else{
+        #    $Array[$RowIndex,$i] = [char] 9608
+        #}
         
         # To get a bar fill all the same row indices of 2D array under and including datapoint
         #For($j=$RowIndex;$j -le $RowIndexNextItem;$j++){
@@ -88,21 +88,31 @@ Function Get-LinePlot {
         write-host "Row:$RowIndex; Next:$RowIndexNextItem" -ForegroundColor Cyan -NoNewline;
 
         if($RowIndex -gt $RowIndexNextItem){
+            #$Array[$RowIndex,$i] = [char] 9622
             $RangeDiff = [math]::abs($RowIndex-$RowIndexNextItem-1)
-            write-host " DOWN [$($RowIndex-1)-$($RowIndexNextItem+1)] RangeDiff: $RangeDiff" -ForegroundColor Green
-            if($RangeDiff -notin 0,1){
+            if($RangeDiff -ne 0){
+                write-host " DOWN [$($RowIndex-1):$($RowIndexNextItem+1)] RangeDiff: $RangeDiff" -ForegroundColor Green
                 Foreach($j in $($RowIndex-1)..$($RowIndexNextItem+1)){
+                    #$Array[$j,$i] = [char] 9145
                     $Array[$j,$i] = [char] 9616
                 }
+                #$Array[$RowIndex,$i] = [char] 9163
+                #$Array[$RowIndex,$i] = [char] 9608
             }
+            $Array[$RowIndex,$i] = [char] 9604
         }elseif($RowIndex -lt $RowIndexNextItem){
-            $RangeDiff = [math]::abs($RowIndex-$RowIndexNextItem-1)
-            write-host " UP [$($RowIndex+1)-$($RowIndexNextItem-1)] RangeDiff: $RangeDiff" -ForegroundColor Green
-            if($RangeDiff -notin 0,1){
-                Foreach($j in $($RowIndex+1)..$($RowIndexNextItem-1)){
+            #$Array[$RowIndex,$i] = [char] 9600
+            $RangeDiff = [math]::abs($RowIndexNextItem-$RowIndex-1)
+            if($RangeDiff -ne 0){
+                write-host " UP [$($RowIndex+1):$($RowIndexNextItem-1)] RangeDiff: $RangeDiff" -ForegroundColor Green
+                Foreach($j in $($RowIndex)..$($RowIndexNextItem-1)){
                     $Array[$j,$i] = [char] 9616
+                    #$Array[$j,$i] = [char] 9145
                 }
+                #$Array[$RowIndex,$i] = [char] 9164
+                #$Array[$RowIndex,$i] = [char] 9608
             }
+            $Array[$RowIndex,$i] = [char] 9600
         }
     }
     # return the 2D array of plots
