@@ -11,13 +11,6 @@ Function Get-ScatterPlot {
             #[ValidateSet("square","dot","triangle")] [String] $Marker = 'dot'
     )
 
-    #$MarkerTable =  @{
-    #    square = [char] 9642
-    #    dot = [char] 9679
-    #    triangle = [char] 9650 # 9652
-    #}
-    #$Marker = $MarkerTable[$Marker]
-
     # Create a 2D Array to save datapoints  in a 2D format
     $Difference = $EndofRange - $StartOfRange
     $NumOfRows = $difference/($Step) + 1
@@ -38,10 +31,6 @@ Function Get-ScatterPlot {
             $Array[$RowIndex,$i] = [char] 9600
         }
         
-        # To get a bar fill all the same row indices of 2D array under and including datapoint
-        #For($j=0;$j -lt $RowIndex;$j++){
-        #    $Array[$j,$i] = $Marker
-        #}
     }
 
     # return the 2D array of plots

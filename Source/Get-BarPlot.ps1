@@ -33,7 +33,6 @@ Function Get-BarPlot {
         
         # To get a bar fill all the same row indices of 2D array under and including datapoint
         For($j=0;$j -lt $RowIndex;$j++){
-            #write-host "`$RowIndex:$RowIndex Data:$($Datapoints[$i]) `$i:$i `$j=$j `$Step:$Step Rows:$NumOfRows Cols:$NumOfDatapoints"
             $Array[$j,$i] = $Marker
         }
     }
@@ -41,17 +40,3 @@ Function Get-BarPlot {
     # return the 2D array of plots
     return ,$Array
 }
-
-#
-#$Array = Get-BarPlot $datapoints -Step 5
-#
-#For($i=$Step;$i -ge 0;$i--){
-#    $Row = ''
-#        For($j=0;$j -lt $NumOfDatapoints;$j++){
-#            $Cell = $Array[$i,$j]
-#             $String = If([String]::IsNullOrWhiteSpace($Cell)){' '}else{$Cell}
-#             $Row = [string]::Concat($Row,$String)          
-#        }
-#
-#    Write-Host $Row
-#}
