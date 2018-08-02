@@ -29,7 +29,7 @@ Function Get-LinePlot {
         if($RowIndex -gt $RowIndexNextItem){
             Foreach($j in $($RowIndex-1)..$($RowIndexNextItem+1)){
                 $Array[$j,$i] = $Line # add line
-            }ker
+            }
         }elseif($RowIndex -lt $RowIndexNextItem){
             Foreach($j in $($RowIndex)..$($RowIndexNextItem-1)){
                 $Array[$j,$i] = $Line # add line
