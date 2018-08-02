@@ -1,19 +1,7 @@
-$BasePath = $PSScriptRoot
-
-# define class sequence
-$classList = @(
-    'Graph'
-)
-
-Get-ChildItem "$BasePath\Source\" -Filter *.ps1 | ForEach-Object {
+Get-ChildItem "$PSScriptRoot\Source\" -Filter *.ps1 | ForEach-Object {
     . $_.FullName
 }
 
-# importing enumerators and hashtables sequentially
-foreach ($item in $classList) {
-    Write-Verbose "Dot sourcing '$item.ps1'" 
-    . "$BasePath\Source\classes\$item.ps1"
-}
 # Exporting the members and their aliases
 Export-ModuleMember Show-Graph -Alias Graph
 
