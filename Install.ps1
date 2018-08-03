@@ -19,28 +19,23 @@ $Pre = $VerbosePreference
 $VerbosePreference = 'continue'
 
     Try {
-        Write-Verbose "$ModuleName module installation started"
+        Write-Verbose "`'$ModuleName`' module installation started"
 
         $Files = @(
             'Graphical.psd1',
             'Graphical.psm1',
             'README.md',
-            $(Join-Path 'Source','Show-Graph.ps1'),
-            $(Join-Path 'Source','Get-BarPlot.ps1'),
-            $(Join-Path 'Source','Get-LinePlot.ps1'),
-            $(Join-Path 'Source','Get-ScatterPlot.ps1'),
-            $(Join-Path 'Source','UtilityFunctions.ps1')
+            $(Join-Path 'Source' 'Show-Graph.ps1'),
+            $(Join-Path 'Source' 'Get-BarPlot.ps1'),
+            $(Join-Path 'Source' 'Get-LinePlot.ps1'),
+            $(Join-Path 'Source' 'Get-ScatterPlot.ps1'),
+            $(Join-Path 'Source' 'UtilityFunctions.ps1')
         )
-    }
-    Catch {
-        throw "Failed installing the module in the install directory '$InstallDirectory': $_"
-    }
 
-    Try {
         if (-not $InstallDirectory) {
-            Write-Verbose "$ModuleName no installation directory provided"
-
             $PersonalModules = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules
+            Write-Verbose "No installation directory was provided"
+            Write-Verbose "Begin installation at: `'$PersonalModules`'"
 
             if (($env:PSModulePath -split ';') -notcontains $PersonalModules) {
                 Write-Warning "$ModuleName personal module path '$PersonalModules' not found in '`$env:PSModulePath'"
