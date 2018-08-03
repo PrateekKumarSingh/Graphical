@@ -56,7 +56,7 @@ $VerbosePreference = 'continue'
         $WebClient = New-Object System.Net.WebClient
 
         $Files | ForEach-Object {
-            $File = $installDirectory,'\',$_.replace('/','\') -join ''
+            $File = Join-Path $installDirectory $_.replace('/','\')
             $URL = $GitPath,'/',$_.replace('\','/') -join ''
             $WebClient.DownloadFile($URL, $File)
 
