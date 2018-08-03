@@ -25,11 +25,11 @@ $VerbosePreference = 'continue'
             'Graphical.psd1',
             'Graphical.psm1',
             'README.md',
-            'Source/Show-Graph.ps1',
-            'Source/Get-BarPlot.ps1',
-            'Source/Get-LinePlot.ps1',
-            'Source/Get-ScatterPlot.ps1',
-            'Source/UtilityFunctions.ps1'
+            $(Join-Path 'Source','Show-Graph.ps1'),
+            $(Join-Path 'Source','Get-BarPlot.ps1'),
+            $(Join-Path 'Source','Get-LinePlot.ps1'),
+            $(Join-Path 'Source','Get-ScatterPlot.ps1'),
+            $(Join-Path 'Source','UtilityFunctions.ps1')
         )
     }
     Catch {
@@ -65,8 +65,6 @@ $VerbosePreference = 'continue'
         $Files | ForEach-Object {
             $File = $installDirectory,'\',$($_ -replace '/','\') -join ''
             $URL = $GitPath,'/',$_ -join ''
-            "$URL $File"
-
             $WebClient.DownloadFile($URL,$File)
             Write-Verbose "$ModuleName installed module file '$_'"
         }
