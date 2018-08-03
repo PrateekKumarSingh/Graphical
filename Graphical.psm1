@@ -1,4 +1,4 @@
-Get-ChildItem "$PSScriptRoot\Source\" -Filter *.ps1 | ForEach-Object {
+Get-ChildItem "$PSScriptRoot\src\" -Filter *.ps1 | ForEach-Object {
     . $_.FullName
 }
 

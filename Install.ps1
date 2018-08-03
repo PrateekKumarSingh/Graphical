@@ -31,21 +31,26 @@ $VerbosePreference = 'continue'
             $(Join-Path 'src' 'UtilityFunctions.ps1')
         )
 
-        if (-not $InstallDirectory) {
-            $PersonalModules = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules
-            Write-Verbose "No installation directory was provided"
-            
-            if (($env:PSModulePath -split ';') -notcontains $PersonalModules) {
-                Write-Warning "$ModuleName personal module path '$PersonalModules' not found in '`$env:PSModulePath'"
+        If(-not ($PSVersionTable.Platform -eq 'Unix')){
+            if (-not $InstallDirectory) {
+                $PersonalModules = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules
+                Write-Verbose "No installation directory was provided"
+                
+                if (($env:PSModulePath -split ';') -notcontains $PersonalModules) {
+                    Write-Warning "$ModuleName personal module path '$PersonalModules' not found in '`$env:PSModulePath'"
+                }
+                
+                if (-not (Test-Path $PersonalModules)) {
+                    Write-Error "$ModuleName path '$PersonalModules' does not exist"
+                }
+                
+                $InstallDirectory = Join-Path -Path $PersonalModules -ChildPath $ModuleName
             }
-            
-            if (-not (Test-Path $PersonalModules)) {
-                Write-Error "$ModuleName path '$PersonalModules' does not exist"
-            }
-            
-            $InstallDirectory = Join-Path -Path $PersonalModules -ChildPath $ModuleName
-            Write-Verbose "Begin installation at: `'$PersonalModules`'"
+        }else{
+            $InstallDirectory = Join-Path -Path $(($env:PSModulePath -split ':')[0]) -ChildPath $ModuleName 
         }
+        
+        Write-Verbose "Begin installation at: `'$InstallDirectory`'"
 
         if (-not (Test-Path $InstallDirectory)) {
             New-Item -Path $InstallDirectory -ItemType Directory -EA Stop -Verbose | Out-Null
