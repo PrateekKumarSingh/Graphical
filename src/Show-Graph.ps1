@@ -9,46 +9,58 @@ Consumes datapoints and draws colored coded fully customizable graph in the Powe
 Array of data points which is to be plotted on the graph
 
 .PARAMETER XAxisTitle
-Parameter description
+Defines text label on x-axis
 
 .PARAMETER YAxisTitle
-Parameter description
+Defines text label on x-axis
 
 .PARAMETER GraphTitle
-Parameter description
+Title of the graph
 
 .PARAMETER XAxisStep
-Parameter description
+Define value of step on x-axis
 
 .PARAMETER YAxisStep
-Parameter description
+Define value of step on y-axis
 
 .PARAMETER Type
-Parameter description
+Choose type of the graph [bar, line, scatter]
 
 .PARAMETER ColorMap
-Parameter description
+Hash table that defines the range of color codes
 
 .PARAMETER HorizontalLines
-Parameter description
+Add horizontal lines to the graph area
 
 .EXAMPLE
-Show-Graph -Datapoints $Datapoints
+$data = 1..100 | Get-Random -Count 50
+Show-Graph -Datapoints $Data -GraphTitle 'CPU'
 
 .EXAMPLE
-Show-Graph -Datapoints $Datapoints -YAxisTitle "Percentage"
+$data = 1..100 | Get-Random -Count 50
+Show-Graph -Datapoints $Data -Type Line
+
+.EXAMPLE
+$data = 1..100 | Get-Random -Count 50
+Show-Graph -Datapoints $Data -Type Scatter
+
+.EXAMPLE
+$data = 1..100 | Get-Random -Count 50
+Show-Graph -Datapoints $Data -YAxisTitle "Percentage" -XAxistitle "Time"
 
 .NOTES
 Blog: https://RidiCurious.com/
 Github: https://github.com/PrateekKumarSingh/Graphical
 Author: https://twitter.com/SinghPrateik
-Features and Benefits:
-* Color-coded output depending upon the Value of Datapoint
-* Custom X an Y-Axis labels
-* Graph in console is independent and fully customizable, not like Task Manager (Performance Tab)
-* Could be incorporated in Powershell scripts
-* Can consume datapoints generated during script run or Pre stored data like in a file or database.
 
+Features and Benefits:
+- Independent of PowerShell version, and Works on PowerShell Core (Windows\Linux)
+- Color-coded output depending upon the Value of data point
+- Colors codes can be customized by passing a color-map hash table
+- Custom X an Y-Axis labels
+- Graph in console is independent and fully customizable, not like Task Manager (Performance Tab)
+- Could be incorporated in Powershell scripts
+- Can consume data points generated during script run or Pre stored data like in a file or database.
 #>
 Function Show-Graph {
     [cmdletbinding()]
