@@ -24,47 +24,46 @@ $VerbosePreference = 'continue'
         $Files = @(
             'Graphical.psd1',
             'Graphical.psm1',
-            'README.md',
-            $(Join-Path 'Source' 'Show-Graph.ps1'),
-            $(Join-Path 'Source' 'Get-BarPlot.ps1'),
-            $(Join-Path 'Source' 'Get-LinePlot.ps1'),
-            $(Join-Path 'Source' 'Get-ScatterPlot.ps1'),
-            $(Join-Path 'Source' 'UtilityFunctions.ps1')
+            $(Join-Path 'src' 'Show-Graph.ps1'),
+            $(Join-Path 'src' 'Get-BarPlot.ps1'),
+            $(Join-Path 'src' 'Get-LinePlot.ps1'),
+            $(Join-Path 'src' 'Get-ScatterPlot.ps1'),
+            $(Join-Path 'src' 'UtilityFunctions.ps1')
         )
 
         if (-not $InstallDirectory) {
             $PersonalModules = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules
             Write-Verbose "No installation directory was provided"
-            Write-Verbose "Begin installation at: `'$PersonalModules`'"
-
+            
             if (($env:PSModulePath -split ';') -notcontains $PersonalModules) {
                 Write-Warning "$ModuleName personal module path '$PersonalModules' not found in '`$env:PSModulePath'"
             }
-
+            
             if (-not (Test-Path $PersonalModules)) {
                 Write-Error "$ModuleName path '$PersonalModules' does not exist"
             }
-
+            
             $InstallDirectory = Join-Path -Path $PersonalModules -ChildPath $ModuleName
-            Write-Verbose "$ModuleName default installation directory is '$InstallDirectory'"
+            Write-Verbose "Begin installation at: `'$PersonalModules`'"
         }
 
         if (-not (Test-Path $InstallDirectory)) {
             New-Item -Path $InstallDirectory -ItemType Directory -EA Stop -Verbose | Out-Null
-            New-Item -Path $InstallDirectory\Source -ItemType Directory -EA Stop -Verbose | Out-Null
+            New-Item -Path $(Join-Path $InstallDirectory src) -ItemType Directory -EA Stop -Verbose | Out-Null
             Write-Verbose "$ModuleName created module folder '$InstallDirectory'"
         }
 
         $WebClient = New-Object System.Net.WebClient
 
         $Files | ForEach-Object {
-            $File = $installDirectory,'\',$($_ -replace '/','\') -join ''
-            $URL = $GitPath,'/',$_ -join ''
-            $WebClient.DownloadFile($URL,$File)
-            Write-Verbose "$ModuleName installed module file '$_'"
+            $File = $installDirectory,'\',$_.replace('/','\') -join ''
+            $URL = $GitPath,'/',$_.replace('\','/') -join ''
+            $WebClient.DownloadFile($URL, $File)
+
+            Write-Verbose "Downloading file '$(Split-Path $_ -Leaf)'"
         }
 
-        Write-Verbose "$ModuleName module installation successful"
+        Write-Verbose "Module installed successfully!"
     }
     Catch {
         throw "Failed installing the module in the install directory '$InstallDirectory': $_"
