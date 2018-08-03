@@ -4,7 +4,7 @@
 RootModule = 'Graphical.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.0'
+ModuleVersion = '1.0.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -19,7 +19,7 @@ Author = 'Prateek Singh'
 CompanyName = 'Prateek Singh'
 
 # Copyright statement for this module
-Copyright = '(c) 2017 Prateek Singh All rights reserved.'
+Copyright = '(c) 2018 Prateek Singh All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = " Consumes data points as input and plots them on a 2D graph in the Powershell console
