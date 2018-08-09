@@ -1,5 +1,5 @@
 # Powershell Console/Terminal Graph
-Consumes data points as input and plots them on a 2D graph in the Powershell console
+Consumes data points as input and plots them on a **2D graph in the Powershell console**
 
 Type of Graphs Available -
 
@@ -15,7 +15,7 @@ Type of Graphs Available -
 
     ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Line.jpg)
 
-## Features
+# Features
 * Color-coded output depending upon the Value of data point
 * Colors codes can be customized by passing a color-map hash table
 * Custom X an Y-Axis labels
@@ -24,7 +24,29 @@ Type of Graphs Available -
 * Can consume data points generated during script run or Pre stored data like in a file or database.
 * Independent of PowerShell version, and Works on PowerShell Core (Windows\Linux)
 
-## Use Cases
+# Installation
+
+### [PowerShell v5](https://www.microsoft.com/en-us/download/details.aspx?id=50395) and Later
+You can install the `Graphical` module directly from the PowerShell Gallery
+
+
+* **[Recommended]** Install to your personal PowerShell Modules folder
+    ```PowerShell
+    Install-Module Graphical -scope CurrentUser
+    ```
+* **[Requires Elevation]** Install for Everyone (computer PowerShell Modules folder)
+    ```PowerShell
+    Install-Module Graphical
+    ```
+
+### PowerShell v4 and Earlier
+To install to your personal modules folder run:
+```PowerShell
+iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/PrateekKumarSingh/Graphical/master/Install.ps1')
+```
+
+
+# Use Cases
 1. The function `Show-Graph` takes data points as input and plot them on a 2D graph
 
     ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example1.jpg)
@@ -57,25 +79,3 @@ Type of Graphs Available -
     ```
 
     ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example4.jpg)
-
-
-## Installation
-
-### [PowerShell v5](https://www.microsoft.com/en-us/download/details.aspx?id=50395) and Later
-You can install the `PSCognitiveService` module directly from the PowerShell Gallery
-
-
-* **[Recommended]** Install to your personal PowerShell Modules folder
-    ```PowerShell
-    Install-Module PSCognitiveService -scope CurrentUser
-    ```
-* **[Requires Elevation]** Install for Everyone (computer PowerShell Modules folder)
-    ```PowerShell
-    Install-Module PSCognitiveService
-    ```
-
-### PowerShell v4 and Earlier
-To install to your personal modules folder run:
-```PowerShell
-iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/PrateekKumarSingh/Graphical/master/Install.ps1')
-```
