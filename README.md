@@ -24,23 +24,55 @@ Type of Graphs Available -
 * Can consume data points generated during script run or Pre stored data like in a file or database.
 * Independent of PowerShell version, and Works on PowerShell Core (Windows\Linux)
 
-For example, in the function `Show-Graph` takes data points as input and plot them on a 2D graph
+## Use Cases
+1. The function `Show-Graph` takes data points as input and plot them on a 2D graph
 
-![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example1.jpg)
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example1.jpg)
 
-You can also customize the labels on X and Y-Axis and provide a graph title
+    You can also customize the labels on X and Y-Axis and provide a graph title
 
-![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example2.jpg)
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example2.jpg)
 
-The function `Show-Graph` can consume data points, generated during script execution or from a file or database like in the above example.
+    The function `Show-Graph` can consume data points, generated during script execution or from a file or database like in the above example.
 
-![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example3.jpg)
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example3.jpg)
+
+2. Plotting Audio Peak Levels in your PowerShell Console (Don't forget to play some audio! :P)
+
+    ```PowerShell
+    Install-Module AudioDeviceCmdlets, Graphical
+    Import-Module AudioDeviceCmdlets, Graphical -Verbose
+    $Device = Get-DefaultAudioDevice
+    [int[]]$datapoints =@(0)*50
+    do {
+        $PeakValue = $Device.Device.AudioMeterInformation.MasterPeakValue*100
+        $datapoints += [int]$PeakValue
+        $datapoints = $datapoints | Select-Object -last 50
+        Clear-Host
+        Show-Graph -datapoints $datapoints -GraphTitle AudioLevels
+        Show-Graph -datapoints $datapoints -GraphTitle AudioLevels -Type Line
+        Show-Graph -datapoints $datapoints -GraphTitle AudioLevels -Type Scatter
+        Start-Sleep -Milliseconds 1000
+    } while ($true)
+    ```
+
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example4.jpg)
 
 
 ## Installation
 
 ### [PowerShell v5](https://www.microsoft.com/en-us/download/details.aspx?id=50395) and Later
-Soon to be uploaded to PowerShell Gallery, stay tuned! But you can clone this repository.
+You can install the `PSCognitiveService` module directly from the PowerShell Gallery
+
+
+* **[Recommended]** Install to your personal PowerShell Modules folder
+    ```PowerShell
+    Install-Module PSCognitiveService -scope CurrentUser
+    ```
+* **[Requires Elevation]** Install for Everyone (computer PowerShell Modules folder)
+    ```PowerShell
+    Install-Module PSCognitiveService
+    ```
 
 ### PowerShell v4 and Earlier
 To install to your personal modules folder run:
