@@ -15,15 +15,6 @@ Type of Graphs Available -
 
     ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Line.jpg)
 
-# Features
-* Color-coded output depending upon the Value of data point
-* Colors codes can be customized by passing a color-map hash table
-* Custom X an Y-Axis labels
-* Graph in console is independent and fully customizable, not like Task Manager (Performance Tab)
-* Could be incorporated in Powershell scripts
-* Can consume data points generated during script run or Pre stored data like in a file or database.
-* Independent of PowerShell version, and Works on PowerShell Core (Windows\Linux)
-
 # Installation
 
 ### [PowerShell v5](https://www.microsoft.com/en-us/download/details.aspx?id=50395) and Later
@@ -45,6 +36,14 @@ To install to your personal modules folder run:
 iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/PrateekKumarSingh/Graphical/master/Install.ps1')
 ```
 
+# Features
+* Color-coded output depending upon the Value of data point
+* Colors codes can be customized by passing a color-map hash table
+* Custom X an Y-Axis labels
+* Graph in console is independent and fully customizable, not like Task Manager (Performance Tab)
+* Could be incorporated in Powershell scripts
+* Can consume data points generated during script run or Pre stored data like in a file or database.
+* Independent of PowerShell version, and Works on PowerShell Core (Windows\Linux)
 
 # Use Cases
 1. The function `Show-Graph` takes data points as input and plot them on a 2D graph
