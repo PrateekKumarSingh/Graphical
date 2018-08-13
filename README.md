@@ -77,4 +77,4 @@ iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercont
     } while ($true)
     ```
 
-    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/AudioPeakLevels.gif)
+    <img src="https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/AudioPeakLevels.gif" width="40" height="40" />
