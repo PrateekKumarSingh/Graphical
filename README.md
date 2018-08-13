@@ -77,4 +77,4 @@ iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercont
     } while ($true)
     ```
 
-    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example4.jpg)
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/AudioPeakLevels.gif)

@@ -1,4 +1,4 @@
-Import-Module c:\data\powershell\repository\Graphical\Graphical.psm1 -Verbose
+Import-Module c:\data\powershell\repository\Graphical\Graphical.psd1 -Verbose
 $Datapoints = Get-Content C:\Temp\data.txt
 Show-Graph -Datapoints $Datapoints -GraphTitle "CPU" -Type Line
 Show-Graph -Datapoints $Datapoints -GraphTitle "Network" -Type Bar
