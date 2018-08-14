@@ -63,7 +63,7 @@ iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercont
     ```PowerShell
     Install-Module AudioDeviceCmdlets, Graphical
     Import-Module AudioDeviceCmdlets, Graphical -Verbose
-    $Device = Get-DefaultAudioDevice
+    $Device = Get-AudioDevice -Playback
     [int[]]$datapoints =@(0)*50
     do {
         $PeakValue = $Device.Device.AudioMeterInformation.MasterPeakValue*100
