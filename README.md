@@ -5,15 +5,15 @@ Type of Graphs Available -
 
 1. Scatter
 
-    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Scatter.jpg)
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/img/Scatter.jpg)
 
 2. Bar
 
-    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Bar.jpg)
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/img/Bar.jpg)
 
 3. Line
 
-    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Line.jpg)
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/img/Line.jpg)
 
 # Installation
 
@@ -48,15 +48,15 @@ iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercont
 # Use Cases
 1. The function `Show-Graph` takes data points as input and plot them on a 2D graph
 
-    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example1.jpg)
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/img/Example1.jpg)
 
     You can also customize the labels on X and Y-Axis and provide a graph title
 
-    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example2.jpg)
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/img/Example2.jpg)
 
     The function `Show-Graph` can consume data points, generated during script execution or from a file or database like in the above example.
 
-    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/Example3.jpg)
+    ![](https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/img/Example3.jpg)
 
 2. Plotting Audio Peak Levels in your PowerShell Console (Don't forget to play some audio! :P)
 
@@ -77,4 +77,4 @@ iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercont
     } while ($true)
     ```
 
-    <img src="https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/Images/AudioPeakLevels.gif" width="40" height="40" />
+    <img src="https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/img/AudioPeakLevels.gif" width="40" height="40" />
