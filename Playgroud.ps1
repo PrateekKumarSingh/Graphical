@@ -1,5 +1,5 @@
 Import-Module c:\data\powershell\repository\Graphical\Graphical.psd1 -Verbose
-$Datapoints = Get-Content C:\Temp\data.txt
+$Datapoints = 67, 68, 33, 62, 38, 68, 55, 68, 60, 60, 72, 54, 44, 73, 62, 75, 61, 53, 34, 56, 74, 41
 Show-Graph -Datapoints $Datapoints -GraphTitle "CPU" -Type Line
 Show-Graph -Datapoints $Datapoints -GraphTitle "Network" -Type Bar
 Show-Graph -Datapoints $Datapoints -GraphTitle 'Memory' -Type Scatter 

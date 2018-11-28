@@ -229,6 +229,8 @@ Function Show-Graph {
         
     }
     
+    # draw bottom boundary
+    $XAxisLabel +=" "*($XAxis.Length-$XAxisLabel.Length) # to match x-axis label length with x-axis length
     [String]::Concat($VerticalEdge,$XAxis,"  ",$VerticalEdge) # Prints X-Axis horizontal line
     [string]::Concat($VerticalEdge,$XAxisLabel,"  ",$VerticalEdge) # Prints X-Axis step labels
 
