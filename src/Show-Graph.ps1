@@ -141,8 +141,8 @@ Function Show-Graph {
     $BottomBoundaryLength = $XAxis.Length + 2
     
     # draw top boundary
-    [string]::Concat($TopLeft," ",$GraphTitle," ",$([string]$TopEdge * $TopBoundaryLength),$TopRight)
-    [String]::Concat($VerticalEdge,$(" "*$($XAxis.length+2)),$VerticalEdge) # extra line to add space between top-boundary and the graph
+    Write-Host [string]::Concat($TopLeft," ",$GraphTitle," ",$([string]$TopEdge * $TopBoundaryLength),$TopRight)
+    Write-Host [String]::Concat($VerticalEdge,$(" "*$($XAxis.length+2)),$VerticalEdge) # extra line to add space between top-boundary and the graph
     
     # draw the graph
     For($i=$NumOfRows;$i -gt 0;$i--){
@@ -231,8 +231,8 @@ Function Show-Graph {
     
     # draw bottom boundary
     $XAxisLabel +=" "*($XAxis.Length-$XAxisLabel.Length) # to match x-axis label length with x-axis length
-    [String]::Concat($VerticalEdge,$XAxis,"  ",$VerticalEdge) # Prints X-Axis horizontal line
-    [string]::Concat($VerticalEdge,$XAxisLabel,"  ",$VerticalEdge) # Prints X-Axis step labels
+    Write-Host [String]::Concat($VerticalEdge,$XAxis,"  ",$VerticalEdge) # Prints X-Axis horizontal line
+    Write-Host [string]::Concat($VerticalEdge,$XAxisLabel,"  ",$VerticalEdge) # Prints X-Axis step labels
 
     
     if(![String]::IsNullOrWhiteSpace($XAxisTitle)){
