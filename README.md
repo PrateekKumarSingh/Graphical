@@ -89,6 +89,7 @@ iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercont
 
     Import-Module Graphical
     Show-Graph -Datapoints $Datpoints -GraphTitle 'CPU (% age)'
-    ```
     
-    ![](https://github.com/PrateekKumarSingh/Graphical/blob/master/img/AzureMonitor.png)
+    ```
+ 
+ ![](https://github.com/PrateekKumarSingh/Graphical/blob/master/img/AzureMonitor.png)
