@@ -78,3 +78,17 @@ iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercont
     ```
 
     <img src="https://github.com/PrateekKumarSingh/PSConsoleGraph/blob/master/img/AudioPeakLevels.gif" width="850" height="500" />
+    
+  3. Visualizing Azure Monitor Metrics like CPU %age on a Virtual machine in #PowerShell
+
+
+    ```PowerShell
+    $ResourceID = '/subscriptions/<subscription>/resourceGroups/demo-resource-group/providers/Microsoft.Compute/virtualMachines/SimpleWinVM'
+    $Data = Get-AzMetric -ResourceId $ResourceID  -WarningAction SilentlyContinue | Select-Object unit, data
+    $Datpoints = $data.data.average.foreach({[int]$_})
+
+    Import-Module Graphical
+    Show-Graph -Datapoints $Datpoints -GraphTitle 'CPU (% age)'
+    ```
+    
+        ![](https://github.com/PrateekKumarSingh/Graphical/blob/master/img/AzureMonitor.png)
