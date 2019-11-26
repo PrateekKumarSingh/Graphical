@@ -15,7 +15,7 @@ Function Get-ScatterPlot {
     $Difference = $EndofRange - $StartOfRange
     $NumOfRows = $difference/($Step) + 1
     $NumOfDatapoints = $Datapoints.Count
-    $Array = New-Object 'object[,]' ($NumOfRows),$NumOfDatapoints
+    $Array = New-Object -TypeName 'object[,]' -ArgumentList ($NumOfRows),$NumOfDatapoints
 
 
     For($i = 0;$i -lt $Datapoints.count;$i++){
