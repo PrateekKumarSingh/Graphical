@@ -15,7 +15,7 @@ Function Get-LinePlot {
     
     # Create a 2D Array to save datapoints  in a 2D format
     $NumOfRows = $difference/($Step) + 1
-    $Array = New-Object 'object[,]' $NumOfRows,$NumOfDatapoints
+    $Array = New-Object -TypeName 'object[,]' -ArgumentList $NumOfRows,$NumOfDatapoints
 
     $Marker = [char] 9608
     $Line = [char] 9616

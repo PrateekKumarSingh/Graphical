@@ -17,7 +17,7 @@ Function Get-BarPlot {
 
     # Create a 2D Array to save datapoints  in a 2D format
     $NumOfRows = $difference/($Step) + 1
-    $Array = New-Object 'object[,]' $NumOfRows,$NumOfDatapoints
+    $Array = New-Object -TypeName 'object[,]' -ArgumentList $NumOfRows,$NumOfDatapoints
 
     For($i = 0;$i -lt $Datapoints.count;$i++){
         # Fit datapoint in a row, where, a row's data range = Total Datapoints / Step

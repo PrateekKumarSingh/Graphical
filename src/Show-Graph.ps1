@@ -109,8 +109,8 @@ Function Show-Graph {
     $YAxisTitleStartIdx, $YAxisTitleEndIdx = CenterAlignStringReturnIndices -String $YAxisTitle -Length $NumOfRows
     
     If($YAxisTitle.Length -gt $NumOfLabelsOnYAxis){
-        Write-Warning "No. Alphabets in YAxisTitle [$($YAxisTitle.Length)] can't be greator than no. of Labels on Y-Axis [$NumOfLabelsOnYAxis]"
-        Write-Warning "YAxisTitle will be cropped"
+        Write-Warning -Message "No. Alphabets in YAxisTitle [$($YAxisTitle.Length)] can't be greator than no. of Labels on Y-Axis [$NumOfLabelsOnYAxis]"
+        Write-Warning -Message "YAxisTitle will be cropped"
     }
     
     # Create a 2D Array to save datapoints  in a 2D format
@@ -238,9 +238,9 @@ Function Show-Graph {
     if(![String]::IsNullOrWhiteSpace($XAxisTitle)){
         # Position the x-axis label at the center of the axis
         $XAxisTitle = " "*$LengthOfMaxYAxisLabel + (CenterAlignString $XAxisTitle $XAxis.Length)        
-        Write-Host $VerticalEdge -NoNewline
-        Write-Host $XAxisTitle -ForegroundColor DarkYellow -NoNewline # Prints XAxisTitle
-        Write-Host $(" "*$(($LengthOfMaxYAxisLabel + $XAxis.length) - $XAxisTitle.Length - 2)) $VerticalEdge
+        Write-Host -Object $VerticalEdge -NoNewline
+        Write-Host -Object $XAxisTitle -ForegroundColor DarkYellow -NoNewline # Prints XAxisTitle
+        Write-Host -Object $(" "*$(($LengthOfMaxYAxisLabel + $XAxis.length) - $XAxisTitle.Length - 2)) $VerticalEdge
     }
     
     # bottom boundary
