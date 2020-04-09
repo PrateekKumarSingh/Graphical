@@ -32,6 +32,9 @@ Hash table that defines the range of color codes
 .PARAMETER HorizontalLines
 Add horizontal lines to the graph area
 
+.PARAMETER OutFile
+Prints the graph to the specified file
+
 .EXAMPLE
 $data = 1..100 | Get-Random -Count 50
 Show-Graph -Datapoints $Data -GraphTitle 'CPU'
@@ -47,6 +50,10 @@ Show-Graph -Datapoints $Data -Type Scatter
 .EXAMPLE
 $data = 1..100 | Get-Random -Count 50
 Show-Graph -Datapoints $Data -YAxisTitle "Percentage" -XAxistitle "Time"
+
+.EXAMPLE
+$data = 1..100 | Get-Random -Count 50
+Show-Graph -Datapoints $Data -YAxisTitle "Percentage" -XAxistitle "Time" -OutFile C:\temp\graph.txt
 
 .NOTES
 Blog: https://RidiCurious.com/
