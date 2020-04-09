@@ -82,7 +82,8 @@ Function Show-Graph {
             [Int] $YAxisStep = 10,
             [ValidateSet("Bar","Scatter","Line")] [String] $Type = 'Bar',
             [Hashtable] $ColorMap,
-            [Switch] $HorizontalLines
+            [Switch] $HorizontalLines,
+            [String] $OutFile
     )
 
     # graph boundary marks
@@ -141,9 +142,13 @@ Function Show-Graph {
     $BottomBoundaryLength = $XAxis.Length + 2
     
     # draw top boundary
-    [string]::Concat($TopLeft," ",$GraphTitle," ",$([string]$TopEdge * $TopBoundaryLength),$TopRight)
-    [String]::Concat($VerticalEdge,$(" "*$($XAxis.length+2)),$VerticalEdge) # extra line to add space between top-boundary and the graph
-    
+    ($Title = [string]::Concat($TopLeft," ",$GraphTitle," ",$([string]$TopEdge * $TopBoundaryLength),$TopRight))
+    ($EmptyLine = [String]::Concat($VerticalEdge,$(" "*$($XAxis.length+2)),$VerticalEdge)) # extra line to add space between top-boundary and the graph
+    if($OutFile){
+        Out-File -InputObject $Title -FilePath $OutFile -Encoding unicode -Append
+        Out-File -InputObject $EmptyLine -FilePath $OutFile -Encoding unicode -Append
+    }
+
     # draw the graph
     For($i=$NumOfRows;$i -gt 0;$i--){
         $Row = ''
@@ -199,7 +204,7 @@ Function Show-Graph {
 
             if ([String]::IsNullOrEmpty($Color)) {$Color = "White"}
             
-            Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row $Color 'DarkYellow'
+            Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row $Color 'DarkYellow' $OutFile
 
         }
         else{
@@ -213,13 +218,13 @@ Function Show-Graph {
             $RangePercent = $i/$NumOfRows * 100
             # To color the graph depending upon the datapoint value
             If ($RangePercent -gt 80) {
-                Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Red' 'DarkYellow'
+                Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Red' 'DarkYellow' $OutFile
             }
             elseif($RangePercent-le 80 -and $RangePercent -gt 40) {
-                Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Yellow' 'DarkYellow' 
+                Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Yellow' 'DarkYellow' $OutFile
             }
             elseif($RangePercent -le 40 -and $RangePercent -ge 1) {
-                Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Green' 'DarkYellow'
+                Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Green' 'DarkYellow' $OutFile
             }
             else {
                 #Write-Host "$YAxisLabel|"
@@ -231,8 +236,12 @@ Function Show-Graph {
     
     # draw bottom boundary
     $XAxisLabel +=" "*($XAxis.Length-$XAxisLabel.Length) # to match x-axis label length with x-axis length
-    [String]::Concat($VerticalEdge,$XAxis,"  ",$VerticalEdge) # Prints X-Axis horizontal line
-    [string]::Concat($VerticalEdge,$XAxisLabel,"  ",$VerticalEdge) # Prints X-Axis step labels
+    ($BottomLine =[String]::Concat($VerticalEdge,$XAxis,"  ",$VerticalEdge)) # Prints X-Axis horizontal line
+    ($XStepLabel = [string]::Concat($VerticalEdge,$XAxisLabel,"  ",$VerticalEdge)) # Prints X-Axis step labels
+    if($OutFile){
+        Out-File -InputObject $BottomLine -FilePath $OutFile -Encoding unicode -Append
+        Out-File -InputObject $XStepLabel -FilePath $OutFile -Encoding unicode -Append
+    }
 
     
     if(![String]::IsNullOrWhiteSpace($XAxisTitle)){
@@ -240,11 +249,20 @@ Function Show-Graph {
         $XAxisTitle = " "*$LengthOfMaxYAxisLabel + (CenterAlignString $XAxisTitle $XAxis.Length)        
         Write-Host -Object $VerticalEdge -NoNewline
         Write-Host -Object $XAxisTitle -ForegroundColor DarkYellow -NoNewline # Prints XAxisTitle
-        Write-Host -Object $(" "*$(($LengthOfMaxYAxisLabel + $XAxis.length) - $XAxisTitle.Length - 2)) $VerticalEdge
+        Write-Host -Object "$(" "*$(($LengthOfMaxYAxisLabel + $XAxis.length) - $XAxisTitle.Length - 1)) $VerticalEdge"
+
+        if($OutFile){
+            Out-File -InputObject $VerticalEdge -NoNewline -Append -FilePath $OutFile -Encoding unicode
+            Out-File -InputObject $XAxisTitle -NoNewline -Append -FilePath $OutFile -Encoding unicode # Prints XAxisTitle
+            Out-File -InputObject "$(" "*$(($LengthOfMaxYAxisLabel + $XAxis.length) - $XAxisTitle.Length - 1)) $VerticalEdge" -Append -FilePath $OutFile -Encoding unicode
+        }
     }
     
     # bottom boundary
-    [string]::Concat($BottomLeft,$([string]$BottomEdge * $BottomBoundaryLength),$BottomRight)
+    ($BottomBoundary =[string]::Concat($BottomLeft,$([string]$BottomEdge * $BottomBoundaryLength),$BottomRight))
+    if($OutFile){
+        Out-File -InputObject $BottomBoundary -FilePath $OutFile -Encoding unicode -Append
+    }
     
 }
 
