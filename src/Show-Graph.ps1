@@ -167,7 +167,7 @@ Function Show-Graph {
         
         
         # add Y-Axis title alphabets if it exists in a row
-        If($i -in $YAxisTitleStartIdx..$YAxisTitleEndIdx -and $YAxisTitle){
+        If($i -ge $YAxisTitleStartIdx -and $i -le $YAxisTitleEndIdx -and $YAxisTitle){
             $YAxisLabelAlphabet = $YAxisTitle[$YAxisTitleAlphabetCounter]
             $YAxisTitleAlphabetCounter++
         }
@@ -192,7 +192,7 @@ Function Show-Graph {
             }
             
             $Color = $Map.ForEach({
-                if($YAxisLabel -in $_.LowerBound..$_.UpperBound){
+                if($YAxisLabel -ge $_.LowerBound -and $YAxisLabel -le $_.UpperBound){
                     $_.Color
                 }
             })
