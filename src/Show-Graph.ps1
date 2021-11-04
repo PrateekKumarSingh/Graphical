@@ -32,6 +32,12 @@ Hash table that defines the range of color codes
 .PARAMETER HorizontalLines
 Add horizontal lines to the graph area
 
+.PARAMETER YAxisMinValue
+The Minimum value on the Y Axis for the graph min/max range. Use to keep a constant graph size.
+
+.PARAMETER YAxisMaxValue
+The Maximum value on the Y Axis for the graph min/max range. Use to keep a constant graph size.
+
 .EXAMPLE
 $data = 1..100 | Get-Random -Count 50
 Show-Graph -Datapoints $Data -GraphTitle 'CPU'
@@ -82,7 +88,9 @@ Function Show-Graph {
             [Int] $YAxisStep = 10,
             [ValidateSet("Bar","Scatter","Line")] [String] $Type = 'Bar',
             [Hashtable] $ColorMap,
-            [Switch] $HorizontalLines
+            [Switch] $HorizontalLines,
+            [Int] $YAxisMinValue = -1,
+            [Int] $YAxisMaxValue = -1
     )
 
     # graph boundary marks
@@ -96,8 +104,23 @@ Function Show-Graph {
     # Calculate Max, Min and Range of Y axis
     $NumOfDatapoints = $Datapoints.Count
     $Metric = $Datapoints | Measure-Object -Maximum -Minimum
-    $EndofRange = $Metric.Maximum + ($YAxisStep - $Metric.Maximum % $YAxisStep)
-    $StartOfRange = $Metric.Minimum - ($Metric.Minimum % $YAxisStep)
+
+    # Support for user-supplied Y-Axis min/max range values: defaults to auto range calculation
+    if($YAxisMinValue -eq -1){
+        $MIN_Y = $Metric.Minimum
+    }else{
+        Write-Verbose "Y-Axis MINIMUM VALUE defined to $YAxisMinValue"
+        $MIN_Y = $YAxisMinValue
+    }
+    if($YAxisMaxValue -eq -1){
+        $MAX_Y = $Metric.Maximum
+    }else{
+        Write-Verbose "Y-Axis MAXIMUM VALUE defined to $YAxisMaxValue"
+        $MAX_Y = $YAxisMaxValue
+    }
+
+    $EndofRange = $MAX_Y + ($YAxisStep - $MAX_Y % $YAxisStep)
+    $StartOfRange = $MIN_Y - ($MIN_Y % $YAxisStep)
     $difference =  $EndofRange - $StartOfRange
     $NumOfRows = $difference/($YAxisStep)
 
