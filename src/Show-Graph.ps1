@@ -145,7 +145,7 @@ Function Show-Graph {
     [String]::Concat($VerticalEdge,$(" "*$($XAxis.length+2)),$VerticalEdge) # extra line to add space between top-boundary and the graph
     
     # draw the graph
-    For($i=$NumOfRows;$i -gt 0;$i--){
+    For($i=$NumOfRows;$i -ge 0;$i--){
         $Row = ''
         For($j=0;$j -lt $NumOfDatapoints;$j++){
             $Cell = $Array[$i,$j]
@@ -218,7 +218,7 @@ Function Show-Graph {
             elseif($RangePercent-le 80 -and $RangePercent -gt 40) {
                 Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Yellow' 'DarkYellow' 
             }
-            elseif($RangePercent -le 40 -and $RangePercent -ge 1) {
+            elseif($RangePercent -le 40 -and $RangePercent -ge 0) {
                 Write-Graph $YAxisLabelAlphabet $YAxisLabel $Row 'Green' 'DarkYellow'
             }
             else {
