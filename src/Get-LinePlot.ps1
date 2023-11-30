@@ -25,16 +25,20 @@ Function Get-LinePlot {
         $RowIndex = [Math]::Ceiling($($Datapoints[$i]-$StartOfRange)/$Step) 
         $RowIndexNextItem = [Math]::Ceiling($($Datapoints[$i+1]-$StartOfRange)/$Step)
 
-        # to decide the direction of line joining two data points
-        if($RowIndex -gt $RowIndexNextItem){
-            Foreach($j in $($RowIndex-1)..$($RowIndexNextItem+1)){
-                $Array[$j,$i] = $Line # add line
-            }
-        }elseif($RowIndex -lt $RowIndexNextItem){
-            Foreach($j in $($RowIndex)..$($RowIndexNextItem-1)){
-                $Array[$j,$i] = $Line # add line
+        # If this is not the last datapoint...
+        if ($i+1 -lt $Datapoints.count) {
+            # to decide the direction of line joining two data points
+            if($RowIndex -gt $RowIndexNextItem){
+                Foreach($j in $($RowIndex-1)..$($RowIndexNextItem+1)){
+                    $Array[$j,$i] = $Line # add line
+                }
+            }elseif($RowIndex -lt $RowIndexNextItem){
+                Foreach($j in $($RowIndex)..$($RowIndexNextItem-1)){
+                    $Array[$j,$i] = $Line # add line
+                }
             }
         }
+
         $Array[$RowIndex,$i] = [char] $Marker # data point
     }
     # return the 2D array of plots
